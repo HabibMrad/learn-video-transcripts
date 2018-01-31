@@ -1,0 +1,63 @@
+Deep learning has revolutionized computer vision, and it’s the core technology behind capabilities like self-driving cars. This series will quickly get you up-to-speed in deep learning. 
+
+
+We’ll use TensorFlow, and the TensorFlow implementation of Keras. TensorFlow is the most popular tool for deep learning, and Keras is a popular API or interface for specifying deep learning models.
+
+
+Keras started as a standalone library for specifying deep learning models, which could then be run in TensorFlow as well as some other deep learning computation engines.
+
+
+The standalone keras library still exists.But TensorFlow has become the dominant engine for deep learning, so the creator of Keras implemented a version of Keras that is built into TensorFlow. This allows you to specify models with the elegance of Keras while taking greater advantage of some powerful TensorFlow features.[a]
+
+
+
+
+We’ll cover topics in a different order than most academic sources.  Other courses start with technical or theoretical details and eventually build up to something you can apply. In this series, you’ll start running powerful models soon to get hands-on experience using deep learning. Then we’ll come back to the technical details you need for fine-tuning your models and addressing novel applications.
+
+
+
+
+Your machine learning experience so far has probably focused on tabular data, like you’d work with in Pandas. We’ll be doing deep learning with images, so we’ll start with an overview of how images are stored for machine learning.
+
+
+Here I have the image of a handwritten digit, the number two. It is composed of pixels. Some pixels are completely black, some are completely white, and some are varying shades of grey.  The pixels are arranged in rows and columns, so it is a natural way to store them in a matrix.
+
+
+The matrix would have might look roughly this this. Each value represents the darkness of a pixel in the image.
+
+
+The number in the upper left of the matrix indicates how dark the upper-left pixel in the image is.  Go down a row in the matrix, and we get the intensity of the pixel one row down in the image.  I made this small matrix to fit on your screen. So the real matrix would be larger than what you see here, but have the same format.[b][c]
+
+
+Color images have an extra dimension. For each pixel, we store how red that pixel is, how green it is, and how blue it is.  It’s like a stack of three matrices. Tensor is the word for something that is like a matrix, but which can have any number of dimensions. So we’ll call them tensors moving forward.  [d]
+
+
+For now, let’s go back to the greyscale image, which has a 2D tensor representing the darkness of each pixel.
+
+
+Today’s deep learning models apply something called convolutions to this type of tensor. A convolution is a small tensor that can be multiplied over little sections of the main image.
+
+
+Here is an example of a convolution.  Convolutions are also called filters, because depending on the values in that convolutional array, it can pick out specific patterns in from the image.
+
+
+I propose that the convolution you see here is a horizontal line detector.  If you multiply it on a part of the image that has a horizontal line, you get a large value. If you multiply it on a part of the image without a horizontal line, it gives a value close to 0.
+Let’s see a simple example:
+
+
+Here we have a part of the image where all the pixels are the same intensity.  We do array-style multiplication, multiplying the upper left values in each tensor, then the upper right values in each tensor, and so on. Then we sum the results.  So we get 1.5 times 200, plus 1.5 times 200, minus 1.5 times 200, minus 1.5 times 200.  [e]
+
+
+For this particular convolution and this set of pixel values, we get a result of 0. [f]
+
+
+Doing the same thing where we have a white area, like this, we get 1.5 times zero in each cell. So we get 0 again.[g]
+
+
+Let’s use the same convolution where we have dark pixels above some light pixels.  In other words, over a horizontal line.  We do the multiplication, and the addition. We get 1.5 times 200, plus 1.5 times 200, plus 0, plus 0. This time we really did get a big number. So this convolution really does work at detecting horizontal lines.[h][i]
+
+
+This particular convolution was two rows by two columns. We could use other size convolutions, like three by three. The numeric values in the convolution determine what pattern it detects.  In practice, you won’t choose those numbers when using deep learning models. We’ll come back to show how you get those numbers.
+
+
+But we’ll start with a short exercise to see convolutions in action. Once you’ve done that exercise and you have a good grasp of a single convolution, you’ll learn how combining many convolutions can create a powerful models. Read on below to get started.

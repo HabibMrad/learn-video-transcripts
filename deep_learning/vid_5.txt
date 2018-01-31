@@ -1,0 +1,37 @@
+Here’s an easy and very cool trick called data augmentation.
+
+
+To start, let’s look at one of those urban images.[aq]  If you flip the image horizontally, taking the photos mirror image, it would still look like an urban scene.  So, we can train our model with both the original image and with the mirror image. [ar]
+
+
+We do this with with the horizontal_flip argument to ImageDataGenerator.  If we set horizontal_flip to true, the ImageDataGenerator will randomly decide whether or not to flip an image every time it is about to send the image to the model training.
+
+
+Before we had 72 images, now it’s almost as if we had twice as many.[as]
+
+
+At some point, we may have so many raw images that we don’t need this, but it’s usually valuable even with hundreds of thousands of images.
+
+
+Also, there are some cases where the mirror image of something shouldn’t be classified the same as the original image.  The mirror image of a stop sign doesn’t say stop, so maybe we shouldn’t train a model to think that’s a stop sign. So you need to judge whether this makes sense on a case by case basis.[at]
+
+
+There are other similar data augmentation techniques listed in the ImageDataGenerator, which you can see in Kernels by typing ImageDataGenerator and then a question mark in kaggle kernels.  For instance we could slightly crop the photo, effectively shifting it slightly horizontally, or slightly vertically.  I’ll add commands to randomly shift the part of the image we train on 20% further to either side, and 20% further up or down. I do that by setting width shift range and height shift range to zero point two.[au][av]
+
+
+Even though I have 72 raw images, we’ll get many different variations of them when model training.[aw]
+
+
+To do an apples-to-apples comparison against the previous model, where we didn’t do data augmentation, I’ll use an ImageDataGenerator for our validation data that doesn’t do this type of data augmentation or manipulation.[ax]  For measuring model quality, we’ll use the same raw images as we used before.
+
+
+Now we’re ready to fit the model.
+
+
+Since we get different versions of the images each time we see them, I’ll add the argument epochs equals two to my call to fit the model.  That means it goes through each raw image file two times. You can experiment with different numbers of epochs. Just remember that data augmentation allows us to use more epochs before we start overfitting, and seeing validation scores get worse.[ay]
+
+
+In this particular case, our validation data is so small that there’s a little bit of noise or luck in the score from any given model.  Validation scores are more reliable on bigger validation datasets, and that’s something we’ll get to.
+
+
+In any case, this is usually an easy way to get more out of your data.  Do it in the following exercise, and then come back for a deeper understanding of what you’ve done… that will lay the foundation for building models from scratch, and building models for an even wider range of problems.
